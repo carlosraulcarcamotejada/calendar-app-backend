@@ -1,5 +1,6 @@
 import Express from "express";
-import router from "./routes/auth";
+import {routerAuth} from "./routes/routerAuth";
+import { routerEvents } from "./routes/routerEvent";
 import dotenv from "dotenv";
 import cors from "cors";
 dotenv.config();
@@ -7,6 +8,7 @@ dotenv.config();
 export const app = () => {
   const express = Express();
 
+  //
   express.use(cors());
 
   //Public directory
@@ -19,7 +21,8 @@ export const app = () => {
 
   
   //Routes
-  express.use("/api/auth", router);
+  express.use("/api/auth", routerAuth);
+  express.use("/api/events", routerEvents);
 
   //Listen petitions
   express.listen(process.env.PORT, () => {

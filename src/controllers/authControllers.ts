@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
-import { User } from "../models/User";
+import { User } from "../models/UserModel";
 import { genSaltSync, hashSync, compareSync } from "bcryptjs";
-import { generateJWT } from "../helpers/jwt";
+import { generateJWT } from "../helpers/generateJWT";
 
 export const signUp: RequestHandler = async (req, res) => {
   try {
@@ -11,6 +11,7 @@ export const signUp: RequestHandler = async (req, res) => {
     if (user) {
       return res.status(400).json({
         ok: false,
+        controller: "signUp",
         message: "El usuario ya existe.",
       });
     }
@@ -27,6 +28,7 @@ export const signUp: RequestHandler = async (req, res) => {
 
     res.status(201).json({
       ok: true,
+      controller: "signUp",
       message: "register",
       _id: user.id,
       name: user.name,
@@ -37,6 +39,7 @@ export const signUp: RequestHandler = async (req, res) => {
     console.log(error);
     res.status(500).json({
       ok: false,
+      controller: "signUp",
       message: "Por favor hable con el administrador.",
     });
   }
@@ -50,6 +53,7 @@ export const login: RequestHandler = async (req, res) => {
     if (!user) {
       return res.status(400).json({
         ok: false,
+        controller: "login",
         message: "El usuario no existe con ese email.",
       });
     }
@@ -59,6 +63,7 @@ export const login: RequestHandler = async (req, res) => {
     if (!validPassword) {
       return res.status(400).json({
         ok: false,
+        controller: "login",
         message: "Contraseña no válida.",
       });
     }
@@ -67,6 +72,7 @@ export const login: RequestHandler = async (req, res) => {
 
     res.status(200).json({
       ok: true,
+      controller: "login",
       message: "login",
       _id: user?.id,
       name: user?.name,
@@ -77,6 +83,7 @@ export const login: RequestHandler = async (req, res) => {
     console.log(error);
     res.status(500).json({
       ok: false,
+      controller: "login",
       message: "Por favor hable con el administrador.",
     });
   }
@@ -90,6 +97,7 @@ export const revalidateToken: RequestHandler = async (req, res) => {
 
     res.json({
       ok: true,
+      controller: "revalidateToken",
       message: "renewtoken",
       token,
     });
@@ -97,6 +105,7 @@ export const revalidateToken: RequestHandler = async (req, res) => {
     console.log(error);
     res.status(500).json({
       ok: false,
+      controller: "revalidateToken",
       message: "Por favor hable con el administrador.",
     });
   }

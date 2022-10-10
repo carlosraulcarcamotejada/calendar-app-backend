@@ -1,5 +1,4 @@
 import { sign } from "jsonwebtoken";
-import { ObjectId } from "mongoose";
 
 export const generateJWT = (_id: string= '' , name: string = "") => {
   return new Promise((resolve, reject) => {

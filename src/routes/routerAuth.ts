@@ -4,14 +4,14 @@
 */
 
 import { Router } from "express";
-import { signUp, login, revalidateToken } from "../controllers/auth";
+import { signUp, login, revalidateToken } from "../controllers/authControllers";
 import { check } from "express-validator";
 import { validateFields } from "../middlewares/validateFields";
 import { validateJwt } from "../middlewares/validateJwt";
 
-const router = Router();
+const routerAuth = Router();
 
-router.post(
+routerAuth.post(
   "/signup",
   [
     //Middlewares validators
@@ -26,7 +26,7 @@ router.post(
   signUp
 );
 
-router.post(
+routerAuth.post(
   "/",
   [
     //Middlewares validators
@@ -40,6 +40,6 @@ router.post(
   login
 );
 
-router.get("/renew",validateJwt ,revalidateToken);
+routerAuth.get("/renew", validateJwt, revalidateToken);
 
-export default router;
+export { routerAuth };
