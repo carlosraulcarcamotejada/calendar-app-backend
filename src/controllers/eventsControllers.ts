@@ -3,7 +3,7 @@ import { Event } from "../models/EventModel";
 
 export const getEvents: RequestHandler = async (req, res) => {
   try {
-    const events = await Event.find().populate("user", "name email");
+    const events = await Event.find();
 
     return res.status(200).json({
       ok: true,

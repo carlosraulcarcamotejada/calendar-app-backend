@@ -3,7 +3,7 @@ import { RequestHandler } from "express";
 
 interface JwtPayload {
   _id: string;
-  name: string;
+  email: string;
 }
 
 export const validateJwt: RequestHandler = (req, res, next) => {
@@ -22,10 +22,10 @@ export const validateJwt: RequestHandler = (req, res, next) => {
       process.env.SECRET_JWT_SEED || ""
     ) as JwtPayload;
 
-    const { _id = "", name = "" } = payload;
+    const { _id = "", email = "" } = payload;
 
     req.body._id = _id;
-    req.body.name = name;
+    req.body.email = email;
 
 
   } catch (error) {

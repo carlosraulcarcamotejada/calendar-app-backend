@@ -24,9 +24,12 @@ export const signUp: RequestHandler = async (req, res) => {
 
     await user.save();
 
-    const token = await generateJWT(user?._id as unknown as string, user?.name);
+    const token = await generateJWT(
+      user?._id as unknown as string,
+      user?.email
+    );
 
-    res.status(201).json({
+    return res.status(201).json({
       ok: true,
       controller: "signUp",
       message: "register",
@@ -36,8 +39,7 @@ export const signUp: RequestHandler = async (req, res) => {
       token,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
+    return res.status(500).json({
       ok: false,
       controller: "signUp",
       message: "Por favor hable con el administrador.",
@@ -48,7 +50,7 @@ export const signUp: RequestHandler = async (req, res) => {
 export const login: RequestHandler = async (req, res) => {
   try {
     const { email, password } = req.body;
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ email: email.toString().toLowerCase() });
 
     if (!user) {
       return res.status(400).json({
@@ -68,20 +70,23 @@ export const login: RequestHandler = async (req, res) => {
       });
     }
 
-    const token = await generateJWT(user?._id as unknown as string, user?.name);
+    const token = await generateJWT(
+      user?._id as unknown as string,
+      user?.email
+    );
 
-    res.status(200).json({
+    return res.status(200).json({
       ok: true,
       controller: "login",
       message: "login",
       _id: user?.id,
       name: user?.name,
+      lastname: user?.lastname,
       email: user?.email,
       token,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
+    return res.status(500).json({
       ok: false,
       controller: "login",
       message: "Por favor hable con el administrador.",
@@ -91,19 +96,20 @@ export const login: RequestHandler = async (req, res) => {
 
 export const revalidateToken: RequestHandler = async (req, res) => {
   try {
-    const { _id, name } = req.body;
-    
-    const token = await generateJWT(_id as unknown as string, name);
+    const { _id, email } = req.body;
 
-    res.json({
+    const token = await generateJWT(_id as unknown as string, email);
+
+    return res.json({
       ok: true,
       controller: "revalidateToken",
       message: "renewtoken",
       token,
+      _id,
+      email,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
+    return res.status(500).json({
       ok: false,
       controller: "revalidateToken",
       message: "Por favor hable con el administrador.",

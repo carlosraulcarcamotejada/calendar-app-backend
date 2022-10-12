@@ -16,6 +16,7 @@ routerAuth.post(
   [
     //Middlewares validators
     check("name", "El nombre es obligatorio.").not().isEmpty(),
+    check("name", "El Apellido es obligatorio.").not().isEmpty(),
     check("email", "El email es obligatorio.").isEmail(),
     check("password", "El password es obligatorio.").isLength({
       min: 8,
@@ -40,6 +41,8 @@ routerAuth.post(
   login
 );
 
-routerAuth.get("/renew", validateJwt, revalidateToken);
+routerAuth.get("/renew",
+ validateJwt, 
+ revalidateToken);
 
 export { routerAuth };

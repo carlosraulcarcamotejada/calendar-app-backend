@@ -1,10 +1,10 @@
 import { sign } from "jsonwebtoken";
 
-export const generateJWT = (_id: string= '' , name: string = "") => {
+export const generateJWT = (_id: string= '' , email: string = "") => {
   return new Promise((resolve, reject) => {
     const payload = {
       _id,
-      name,
+      email,
     };
 
     sign(
