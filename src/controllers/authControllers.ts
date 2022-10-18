@@ -25,8 +25,10 @@ export const signUp: RequestHandler = async (req, res) => {
     await user.save();
 
     const token = await generateJWT(
-      user?._id as unknown as string,
-      user?.email
+      user._id.toString(),
+      user.email,
+      user.name,
+      user.lastname
     );
 
     return res.status(201).json({
@@ -72,8 +74,11 @@ export const login: RequestHandler = async (req, res) => {
 
     const token = await generateJWT(
       user?._id as unknown as string,
-      user?.email
+      user?.email,
+      user?.name,
+      user?.lastname
     );
+
 
     return res.status(200).json({
       ok: true,
@@ -96,9 +101,9 @@ export const login: RequestHandler = async (req, res) => {
 
 export const revalidateToken: RequestHandler = async (req, res) => {
   try {
-    const { _id, email } = req.body;
+    const { _id, email, name, lastname } = req.body;
 
-    const token = await generateJWT(_id as unknown as string, email);
+    const token = await generateJWT(_id, email, name, lastname );
 
     return res.json({
       ok: true,
@@ -107,6 +112,8 @@ export const revalidateToken: RequestHandler = async (req, res) => {
       token,
       _id,
       email,
+      name,
+      lastname,
     });
   } catch (error) {
     return res.status(500).json({
