@@ -14,7 +14,7 @@ const mongoose_1 = require("mongoose");
 const dbConnection = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const db = yield (0, mongoose_1.connect)(process.env.DB_CNN || "");
-        console.log(`Conectada a: ${db.connection.name}`);
+        console.log(`Connected to: ${db.connection.name}`);
     }
     catch (error) {
         console.log(error);

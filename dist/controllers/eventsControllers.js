@@ -13,7 +13,7 @@ exports.deleteEvent = exports.updateEvent = exports.createEvent = exports.getEve
 const EventModel_1 = require("../models/EventModel");
 const getEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const events = yield EventModel_1.Event.find().populate("user", "name email");
+        const events = yield EventModel_1.Event.find();
         return res.status(200).json({
             ok: true,
             controller: "getEvents",

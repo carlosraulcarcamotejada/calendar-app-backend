@@ -18,6 +18,10 @@ const EventSchema = new mongoose_1.Schema({
     notes: {
         type: String,
     },
+    bgColor: {
+        type: String,
+        required: true,
+    },
     user: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "User",
