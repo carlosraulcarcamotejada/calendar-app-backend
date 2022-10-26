@@ -23,6 +23,9 @@ const app = () => {
     //Routes
     express.use("/api/auth", routerAuth_1.routerAuth);
     express.use("/api/events", routerEvent_1.routerEvents);
+    express.get("*", (req, res) => {
+        res.sendFile(__dirname + "/public/index.html");
+    });
     //Listen petitions
     express.listen(process.env.PORT, () => {
         console.log(`Server on port ${process.env.PORT}`);
