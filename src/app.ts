@@ -8,7 +8,7 @@ dotenv.config();
 export const app = () => {
   const express = Express();
 
-  //
+  //Permite habilitar acceso
   express.use(cors());
 
   //Public directory
